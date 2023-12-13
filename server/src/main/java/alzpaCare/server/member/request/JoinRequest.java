@@ -1,5 +1,6 @@
-package alzpaCare.server.member;
+package alzpaCare.server.member.request;
 
+import alzpaCare.server.member.Member;
 import jakarta.validation.constraints.*;
 
 public record JoinRequest(

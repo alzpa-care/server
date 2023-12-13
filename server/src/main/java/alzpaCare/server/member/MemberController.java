@@ -1,11 +1,15 @@
 package alzpaCare.server.member;
 
+import alzpaCare.server.member.mapper.MemberMapper;
+import alzpaCare.server.member.request.FindEmailRequest;
+import alzpaCare.server.member.request.FindPasswordRequest;
+import alzpaCare.server.member.request.JoinRequest;
+import alzpaCare.server.member.request.UpdateRequest;
+import alzpaCare.server.member.response.MemberResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,6 +39,33 @@ public class MemberController {
         memberService.findPassword(findPasswordRequest);
 
         return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다.");
+    }
+
+    @GetMapping("/member")
+    public ResponseEntity<MemberResponse> getMember(Authentication authentication) {
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+
+        Member member = memberService.findByEmail(username);
+
+        MemberResponse memberResponse = MemberMapper.toMemberResponse(member);
+
+        return ResponseEntity.ok(memberResponse);
+    }
+
+    @PatchMapping("/member")
+    public ResponseEntity<MemberResponse> patchMember(
+            @RequestBody @Valid UpdateRequest updateRequest, Authentication authentication) {
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+
+        Member member = memberService.updateMember(updateRequest, username);
+
+        MemberResponse updatedMemberResponse = MemberMapper.toMemberResponse(member);
+
+        return ResponseEntity.ok(updatedMemberResponse);
     }
 
 

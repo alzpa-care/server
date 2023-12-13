@@ -3,6 +3,9 @@ package alzpaCare.server.member;
 
 import alzpaCare.server.advice.BusinessLogicException;
 import alzpaCare.server.advice.ExceptionCode;
+import alzpaCare.server.member.request.FindEmailRequest;
+import alzpaCare.server.member.request.FindPasswordRequest;
+import alzpaCare.server.member.request.UpdateRequest;
 import lombok.RequiredArgsConstructor;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -67,6 +70,34 @@ public class MemberService {
         } else {
             throw new BusinessLogicException(ExceptionCode.FIND_PASSWORD_MEMBER_NOT_FOUND);
         }
+    }
+
+//    @Transactional(readOnly = true)
+//    public Member findByEmail(String email) {
+//        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+//        if (optionalMember.isPresent()) {
+//            return optionalMember.get();
+//        } else {
+//            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+//        }
+//    } //아래 람다식과 동일한 코드
+
+    @Transactional(readOnly = true)
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
+
+    public Member updateMember(UpdateRequest updateRequest, String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        member.setNickname(updateRequest.nickname());
+        member.setPhoneNumber(updateRequest.phoneNumber());
+        member.setImgUrl(updateRequest.imgUrl());
+
+
+        return memberRepository.save(member);
     }
 
 

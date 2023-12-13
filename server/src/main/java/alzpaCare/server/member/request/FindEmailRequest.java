@@ -1,4 +1,4 @@
-package alzpaCare.server.member;
+package alzpaCare.server.member.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
