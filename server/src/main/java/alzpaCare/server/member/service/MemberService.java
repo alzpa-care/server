@@ -7,10 +7,7 @@ import alzpaCare.server.member.entity.Authority;
 import alzpaCare.server.member.entity.Member;
 import alzpaCare.server.member.repository.AuthorityRepository;
 import alzpaCare.server.member.repository.MemberRepository;
-import alzpaCare.server.member.request.FindEmailRequest;
-import alzpaCare.server.member.request.FindPasswordRequest;
-import alzpaCare.server.member.request.ImgUrlRequest;
-import alzpaCare.server.member.request.UpdateRequest;
+import alzpaCare.server.member.request.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -79,23 +76,12 @@ public class MemberService {
             // 회원이 존재하면 비밀번호를 업데이트
             Member member = optionalMember.get();
             String newPassword = passwordEncoder.encode(findPasswordRequest.getPassword());
-//            String newPassword = findPasswordRequest.getPassword();
             member.setPassword(newPassword);
             memberRepository.save(member);
         } else {
             throw new BusinessLogicException(ExceptionCode.FIND_PASSWORD_MEMBER_NOT_FOUND);
         }
     }
-
-//    @Transactional(readOnly = true)
-//    public Member findByEmail(String email) {
-//        Optional<Member> optionalMember = memberRepository.findByEmail(email);
-//        if (optionalMember.isPresent()) {
-//            return optionalMember.get();
-//        } else {
-//            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
-//        }
-//    } //아래 람다식과 동일한 코드
 
     @Transactional(readOnly = true)
     public Member findByEmail(String email) {
@@ -123,5 +109,22 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
+    public void updatePassword(PasswordRequest passwordRequest, String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
+        String newPassword = passwordEncoder.encode(passwordRequest.getPassword());
+        member.setPassword(newPassword);
+
+        memberRepository.save(member);
+    }
+
+
+    public void updateDelete(String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        member.setDeleteYn("Y");
+        memberRepository.save(member);
+    }
 }
