@@ -1,6 +1,6 @@
 package alzpaCare.server.member.request;
 
-import alzpaCare.server.member.Member;
+import alzpaCare.server.member.entity.Member;
 import jakarta.validation.constraints.*;
 
 public record JoinRequest(
@@ -56,7 +56,10 @@ public record JoinRequest(
         @NotNull(message = "이메일동의는 필수 입력 사항입니다.")
         @NotBlank(message = "이메일동의는 공백일 수 없습니다.")
         @Pattern(regexp = "^[YN]$", message = "'Y' 또는 'N'이어야 합니다.")
-        String emailYn
+        String emailYn,
+
+        @Pattern(regexp = "^[YN]$", message = "'Y' 또는 'N'이어야 합니다.")
+        String deleteYn
 ){
 
         public Member toEntity() {
@@ -71,7 +74,9 @@ public record JoinRequest(
                     .privacyPolicyYn(privacyPolicyYn())
                     .locationYn(locationYn())
                     .emailYn(emailYn())
+                    .deleteYn("N")
                     .build();
         }
+
 
 }

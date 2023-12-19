@@ -1,6 +1,6 @@
 package alzpaCare.server.member.mapper;
 
-import alzpaCare.server.member.Member;
+import alzpaCare.server.member.entity.Member;
 import alzpaCare.server.member.response.MemberResponse;
 
 public class MemberMapper {

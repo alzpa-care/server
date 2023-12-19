@@ -1,8 +1,6 @@
 package alzpaCare.server.member.request;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -14,8 +12,7 @@ public record UpdateRequest(
 
         @NotBlank(message = "전화번호는 공백일 수 없습니다.")
         @Pattern(regexp = "^[0-9]+$", message = "숫자만 입력해야 합니다.")
-        String phoneNumber,
+        String phoneNumber
 
-        String imgUrl
 ) {
 }

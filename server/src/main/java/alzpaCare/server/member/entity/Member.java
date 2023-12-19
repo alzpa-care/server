@@ -1,9 +1,11 @@
-package alzpaCare.server.member;
+package alzpaCare.server.member.entity;
 
 
 import alzpaCare.server.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "members")
@@ -18,13 +20,13 @@ public class Member extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer memberId;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, updatable = false, nullable = false)
     private String email;
 
     @Column(length = 100, nullable = false)
     private String password;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20, updatable = false, nullable = false)
     private String name;
 
     @Column(length = 12, nullable = false)
@@ -33,7 +35,7 @@ public class Member extends Auditable {
     @Column(length = 20, nullable = false)
     private String phoneNumber;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 10, updatable = false, nullable = false)
     private String birth;
 
     @Column(length = 254)
@@ -53,6 +55,13 @@ public class Member extends Auditable {
 
     @Column(length = 1, columnDefinition = "CHAR DEFAULT 'N'")
     private String deleteYn;
+
+    @ManyToMany
+    @JoinTable(
+            name = "member_authority",
+            joinColumns = {@JoinColumn(name = "member_id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_role")})
+    private Set<Authority> authorities;
 
 
 }

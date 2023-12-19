@@ -1,16 +1,22 @@
-package alzpaCare.server.member;
+package alzpaCare.server.member.service;
 
 
 import alzpaCare.server.advice.BusinessLogicException;
 import alzpaCare.server.advice.ExceptionCode;
+import alzpaCare.server.member.entity.Authority;
+import alzpaCare.server.member.entity.Member;
+import alzpaCare.server.member.repository.AuthorityRepository;
+import alzpaCare.server.member.repository.MemberRepository;
 import alzpaCare.server.member.request.FindEmailRequest;
 import alzpaCare.server.member.request.FindPasswordRequest;
+import alzpaCare.server.member.request.ImgUrlRequest;
 import alzpaCare.server.member.request.UpdateRequest;
 import lombok.RequiredArgsConstructor;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -19,15 +25,24 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-//    private final PasswordEncoder passwordEncoder;
+    private final AuthorityRepository authorityRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public void createNewMember(Member member) {
         // 이메일 중복 체크
         if (isEmailAlreadyExists(member.getEmail())) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_EMAIL_ALREADY_EXISTS);
         }
-//        String encryptedPassword = passwordEncoder.encode(member.getPassword());
-//        member.setPassword(encryptedPassword);
+
+        Authority authority = Authority.builder()
+                .role("ROLE_USER")
+                .build();
+        authorityRepository.save(authority);
+
+        String encryptedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encryptedPassword);
+
+        member.setAuthorities(Collections.singleton(authority));
         memberRepository.save(member);
     }
 
@@ -63,8 +78,8 @@ public class MemberService {
         if (optionalMember.isPresent()) {
             // 회원이 존재하면 비밀번호를 업데이트
             Member member = optionalMember.get();
-//            String newPassword = passwordEncoder.encode(findPasswordRequest.getPassword());
-            String newPassword = findPasswordRequest.getPassword();
+            String newPassword = passwordEncoder.encode(findPasswordRequest.getPassword());
+//            String newPassword = findPasswordRequest.getPassword();
             member.setPassword(newPassword);
             memberRepository.save(member);
         } else {
@@ -94,7 +109,15 @@ public class MemberService {
 
         member.setNickname(updateRequest.nickname());
         member.setPhoneNumber(updateRequest.phoneNumber());
-        member.setImgUrl(updateRequest.imgUrl());
+
+        return memberRepository.save(member);
+    }
+
+    public Member updateImgUrl(ImgUrlRequest imgUrlRequest, String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        member.setImgUrl(imgUrlRequest.imgUrl());
 
 
         return memberRepository.save(member);
