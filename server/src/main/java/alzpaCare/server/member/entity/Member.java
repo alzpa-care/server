@@ -2,6 +2,7 @@ package alzpaCare.server.member.entity;
 
 
 import alzpaCare.server.audit.Auditable;
+import alzpaCare.server.patient.Patient;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -62,6 +63,9 @@ public class Member extends Auditable {
             joinColumns = {@JoinColumn(name = "member_id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_role")})
     private Set<Authority> authorities;
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    private Patient patient;
 
 
 }

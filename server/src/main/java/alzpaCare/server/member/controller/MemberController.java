@@ -44,7 +44,7 @@ public class MemberController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String username = userDetails.getUsername();
 
-        Member member = memberService.findByEmail(username);
+        Member member = memberService.findMemberByEmail(username);
 
         MemberResponse memberResponse = MemberMapper.toMemberResponse(member);
 
@@ -101,7 +101,6 @@ public class MemberController {
 
         return ResponseEntity.ok("회원탈퇴가 성공적으로 완료되었습니다.");
     }
-
 
 
 }
