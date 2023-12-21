@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="07e2661e-0966-420f-a600-30abef03a5b6" name="Changes" comment="" />
+    <list default="true" id="07e2661e-0966-420f-a600-30abef03a5b6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/patient/Patient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/patient/PatientRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/patient/PatientRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/member/entity/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/member/entity/Member.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

@@ -44,7 +44,7 @@ public class MemberController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String username = userDetails.getUsername();
 
-        Member member = memberService.findByEmail(username);
+        Member member = memberService.findMemberByEmail(username);
 
         MemberResponse memberResponse = MemberMapper.toMemberResponse(member);
 
@@ -77,6 +77,29 @@ public class MemberController {
         MemberResponse updatedMemberResponse = MemberMapper.toMemberResponse(member);
 
         return ResponseEntity.ok(updatedMemberResponse);
+    }
+
+    @PatchMapping("/member/pw")
+    public ResponseEntity<String> patchPassword(
+            @RequestBody @Valid PasswordRequest passwordRequest, Authentication authentication) {
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+
+        memberService.updatePassword(passwordRequest, username);
+
+        return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다.");
+    }
+
+    @PatchMapping("/withdrawals")
+    public ResponseEntity<String> patchDelete(Authentication authentication) {
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+
+        memberService.updateDelete(username);
+
+        return ResponseEntity.ok("회원탈퇴가 성공적으로 완료되었습니다.");
     }
 
 
