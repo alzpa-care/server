@@ -1,4 +1,7 @@
-package alzpaCare.server.patient;
+package alzpaCare.server.patient.mapper;
+
+import alzpaCare.server.patient.response.PatientResponse;
+import alzpaCare.server.patient.entity.Patient;
 
 public class PatientMapper {
 

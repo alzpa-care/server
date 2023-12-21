@@ -1,5 +1,10 @@
-package alzpaCare.server.patient;
+package alzpaCare.server.patient.controller;
 
+import alzpaCare.server.patient.entity.Patient;
+import alzpaCare.server.patient.mapper.PatientMapper;
+import alzpaCare.server.patient.request.PatientRequest;
+import alzpaCare.server.patient.response.PatientResponse;
+import alzpaCare.server.patient.service.PatientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

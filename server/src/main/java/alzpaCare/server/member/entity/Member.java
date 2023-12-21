@@ -2,7 +2,7 @@ package alzpaCare.server.member.entity;
 
 
 import alzpaCare.server.audit.Auditable;
-import alzpaCare.server.patient.Patient;
+import alzpaCare.server.patient.entity.Patient;
 import jakarta.persistence.*;
 import lombok.*;
 

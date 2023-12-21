@@ -1,7 +1,10 @@
-package alzpaCare.server.patient;
+package alzpaCare.server.patient.service;
 
 import alzpaCare.server.advice.BusinessLogicException;
 import alzpaCare.server.advice.ExceptionCode;
+import alzpaCare.server.patient.entity.Patient;
+import alzpaCare.server.patient.repository.PatientRepository;
+import alzpaCare.server.patient.request.PatientRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

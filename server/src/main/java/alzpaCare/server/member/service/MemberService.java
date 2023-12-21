@@ -8,7 +8,7 @@ import alzpaCare.server.member.entity.Member;
 import alzpaCare.server.member.repository.AuthorityRepository;
 import alzpaCare.server.member.repository.MemberRepository;
 import alzpaCare.server.member.request.*;
-import alzpaCare.server.patient.MemberCreatedEvent;
+import alzpaCare.server.patient.event.MemberCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
