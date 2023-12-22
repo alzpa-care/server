@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,8 +23,7 @@ public class PatientController {
     public ResponseEntity<PatientResponse> patchPatient
             (@RequestBody @Valid PatientRequest patientRequest, Authentication authentication) {
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
+        String username = authentication.getName();
 
         Patient patient = patientService.updatePatient(patientRequest, username);
         PatientResponse patientResponse = PatientMapper.toPatientResponse(patient);
@@ -36,8 +34,7 @@ public class PatientController {
     @GetMapping
     public ResponseEntity<PatientResponse> getPatient(Authentication authentication) {
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
+        String username = authentication.getName();
 
         Patient patient = patientService.findPatientByMember(username);
 

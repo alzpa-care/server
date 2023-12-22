@@ -10,6 +10,7 @@ public enum ExceptionCode {
     MEMBER_NOT_FOUND(404, "Member not found"),
     INVALID_CREDENTIALS(404,"아이디 또는 비밀번호가 맞지 않습니다. 다시 확인해 주세요."),
     PATIENT_NOT_FOUND(404, "환자를 찾을 수 없습니다."),
+    INVALID_CATEGORY(404, "잘못된 카테고리 입니다."),
 
     //이위에는 사용중인 코드
     MEMBER_EXISTS(409, "Member exists"),

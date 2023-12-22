@@ -9,7 +9,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,8 +40,7 @@ public class MemberController {
 
     @GetMapping("/member")
     public ResponseEntity<MemberResponse> getMember(Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
+        String username = authentication.getName();
 
         Member member = memberService.findMemberByEmail(username);
 
@@ -55,8 +53,7 @@ public class MemberController {
     public ResponseEntity<MemberResponse> patchMember(
             @RequestBody @Valid UpdateRequest updateRequest, Authentication authentication) {
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
+        String username = authentication.getName();
 
         Member member = memberService.updateMember(updateRequest, username);
 
@@ -69,8 +66,7 @@ public class MemberController {
     public ResponseEntity<MemberResponse> patchImgUrl(
             @RequestBody @Valid ImgUrlRequest imgUrlRequest, Authentication authentication) {
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
+        String username = authentication.getName();
 
         Member member = memberService.updateImgUrl(imgUrlRequest, username);
 
@@ -83,8 +79,7 @@ public class MemberController {
     public ResponseEntity<String> patchPassword(
             @RequestBody @Valid PasswordRequest passwordRequest, Authentication authentication) {
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
+        String username = authentication.getName();
 
         memberService.updatePassword(passwordRequest, username);
 
@@ -94,8 +89,7 @@ public class MemberController {
     @PatchMapping("/withdrawals")
     public ResponseEntity<String> patchDelete(Authentication authentication) {
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
+        String username = authentication.getName();
 
         memberService.updateDelete(username);
 
