@@ -1,7 +1,9 @@
 package alzpaCare.server.advice;
 
 
+import alzpaCare.server.product.Category;
 import alzpaCare.server.response.ErrorResponse;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

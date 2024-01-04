@@ -1,4 +1,4 @@
-package alzpaCare.server.patient;
+package alzpaCare.server.patient.event;
 
 import alzpaCare.server.member.entity.Member;
 import org.springframework.context.ApplicationEvent;

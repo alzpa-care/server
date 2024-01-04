@@ -1,6 +1,8 @@
-package alzpaCare.server.patient;
+package alzpaCare.server.patient.event;
 
 import alzpaCare.server.member.entity.Member;
+import alzpaCare.server.patient.entity.Patient;
+import alzpaCare.server.patient.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;

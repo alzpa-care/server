@@ -1,5 +1,6 @@
-package alzpaCare.server.patient;
+package alzpaCare.server.patient.request;
 
+import alzpaCare.server.patient.entity.Patient;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 

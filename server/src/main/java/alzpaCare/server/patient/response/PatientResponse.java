@@ -1,4 +1,4 @@
-package alzpaCare.server.patient;
+package alzpaCare.server.patient.response;
 
 import java.time.Year;
 

@@ -5,6 +5,7 @@ import alzpaCare.server.security.error.JwtAuthenticationEntryPoint;
 import alzpaCare.server.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -67,7 +68,9 @@ public class SecurityConfig {
                         authorizeRequests
                                 .requestMatchers("/","/login/**","/join/**").permitAll()
                                 .requestMatchers("/find/id/**","/find/pw/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/product/**").permitAll()
                                 .requestMatchers("/member/**").hasRole("USER")
+                                .requestMatchers("/product/**").hasRole("USER")
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().permitAll()
                 )

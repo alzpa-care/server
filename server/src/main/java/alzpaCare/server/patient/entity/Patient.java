@@ -1,4 +1,4 @@
-package alzpaCare.server.patient;
+package alzpaCare.server.patient.entity;
 
 import alzpaCare.server.member.entity.Member;
 import jakarta.persistence.*;
