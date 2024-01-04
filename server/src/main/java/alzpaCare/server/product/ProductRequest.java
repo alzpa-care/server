@@ -1,7 +1,5 @@
 package alzpaCare.server.product;
 
-import alzpaCare.server.advice.BusinessLogicException;
-import alzpaCare.server.advice.ExceptionCode;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,9 +7,7 @@ import jakarta.validation.constraints.Size;
 
 public record ProductRequest(
 
-        @NotNull(message = "카테고리는 필수 입력 사항입니다.")
-        @NotBlank(message = "카테고리는 공백일 수 없습니다.")
-        String category,
+        Category category,
 
         @NotNull(message = "가격은 필수 입력 사항입니다.")
         @Min(value = 1, message = "가격은 1 이상이어야 합니다.")
@@ -37,19 +33,15 @@ public record ProductRequest(
 ) {
 
         public Product toEntity() {
-            try {
-                return Product.builder()
-                        .category(Category.valueOf(category()))
-                        .price(price())
-                        .title(title())
-                        .content(content())
-                        .areas(areas())
-                        .imgUrl(imgUrl())
-                        .soldOutYn("N")
-                        .build();
-            } catch (IllegalArgumentException e) {
-                throw new BusinessLogicException(ExceptionCode.INVALID_CATEGORY);
-            }
+            return Product.builder()
+                    .category(category)
+                    .price(price())
+                    .title(title())
+                    .content(content())
+                    .areas(areas())
+                    .imgUrl(imgUrl())
+                    .soldOutYn("N")
+                    .build();
         }
 
 
