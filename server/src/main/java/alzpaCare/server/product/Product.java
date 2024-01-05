@@ -51,4 +51,6 @@ public class Product extends Auditable {
     private Member buyerMember;
 
 
+
+
 }
