@@ -1,5 +1,7 @@
-package alzpaCare.server.product;
+package alzpaCare.server.product.request;
 
+import alzpaCare.server.product.entity.Category;
+import alzpaCare.server.product.entity.Product;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -41,6 +43,7 @@ public record ProductRequest(
                     .areas(areas())
                     .imgUrl(imgUrl())
                     .soldOutYn("N")
+                    .commentCount(0)
                     .build();
         }
 

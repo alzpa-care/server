@@ -1,4 +1,4 @@
-package alzpaCare.server.product;
+package alzpaCare.server.product.entity;
 
 public enum Category {
 

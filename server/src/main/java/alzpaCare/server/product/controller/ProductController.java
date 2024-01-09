@@ -1,5 +1,10 @@
-package alzpaCare.server.product;
+package alzpaCare.server.product.controller;
 
+import alzpaCare.server.product.response.ProductResponse;
+import alzpaCare.server.product.service.ProductService;
+import alzpaCare.server.product.entity.Product;
+import alzpaCare.server.product.request.BuyerRequest;
+import alzpaCare.server.product.request.ProductRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static alzpaCare.server.product.response.ProductResponse.toProductResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +30,7 @@ public class ProductController {
         String username = authentication.getName();
 
         Product product = productService.createProduct(productRequest.toEntity(), username);
-        ProductResponse productResponse = ProductMapper.toProductResponse(product);
+        ProductResponse productResponse = toProductResponse(product);
 
         return ResponseEntity.ok(productResponse);
     }
@@ -37,7 +44,7 @@ public class ProductController {
         String username = authentication.getName();
 
         Product product = productService.updateProduct(productId, productRequest, username);
-        ProductResponse productResponse = ProductMapper.toProductResponse(product);
+        ProductResponse productResponse = toProductResponse(product);
 
         return ResponseEntity.ok(productResponse);
     }
@@ -51,7 +58,7 @@ public class ProductController {
         String username = authentication.getName();
 
         Product product = productService.updateBuyer(productId, buyerRequest, username);
-        ProductResponse productResponse = ProductMapper.toProductResponse(product);
+        ProductResponse productResponse = toProductResponse(product);
 
         return ResponseEntity.ok(productResponse);
     }
@@ -61,7 +68,7 @@ public class ProductController {
             @PathVariable("productId") Integer productId) {
 
         Product product = productService.findProductById(productId);
-        ProductResponse productResponse = ProductMapper.toProductResponse(product);
+        ProductResponse productResponse = toProductResponse(product);
 
         return ResponseEntity.ok(productResponse);
     }
@@ -75,7 +82,7 @@ public class ProductController {
         List<Product> products = productService.getProducts(category, order, completed);
 
         List<ProductResponse> productResponses = products.stream()
-                .map(ProductMapper::toProductResponse)
+                .map(ProductResponse::toProductResponse)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(productResponses);
