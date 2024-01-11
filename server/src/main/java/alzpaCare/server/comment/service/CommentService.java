@@ -32,6 +32,7 @@ public class CommentService {
 
         comment.setMember(member);
         comment.setProduct(product);
+        comment.setCommentType("댓글");
 
         Comment savedComment = commentRepository.save(comment);
         // 댓글이 성공적으로 저장되면 댓글 카운트를 증가시킨다
@@ -47,6 +48,7 @@ public class CommentService {
         reply.setParent(parentComment);
         reply.setProduct(parentComment.getProduct());
         reply.setMember(member);
+        reply.setCommentType("대댓글");
 
         Comment savedReply = commentRepository.save(reply);
 
@@ -58,7 +60,8 @@ public class CommentService {
         return savedReply;
     }
 
-    public List<CommentResponse> getCommentResponsesByProduct(Integer productId, String email) {
+    @Transactional(readOnly = true)
+    public List<CommentResponse> findCommentById(Integer productId, String email) {
         List<CommentResponse> result = new ArrayList<>();
         List<Comment> parentComments = commentRepository.findParentCommentsByProductIdOrderByCreatedAt(productId);
 
@@ -71,6 +74,7 @@ public class CommentService {
             boolean isCommentAuthor = parentComment.getMember().getEmail().equals(email);
 
             String modifiedContent;
+
             if (isPostAuthor || isCommentAuthor) {
                 modifiedContent = parentComment.getContent();
             } else {
@@ -81,6 +85,7 @@ public class CommentService {
                     parentComment.getCommentId(),
                     modifiedContent,
                     parentComment.getCreatedAt(),
+                    parentComment.getCommentType(),
                     MemberMapper.toMemberSummaryResponse(parentComment.getMember())
             );
             result.add(parentResponse);
@@ -91,6 +96,7 @@ public class CommentService {
                 boolean isReplyAuthor = reply.getMember().getEmail().equals(email) || isPostAuthor || isCommentAuthor;
 
                 String modifiedReplyContent;
+
                 if (isReplyAuthor) {
                     modifiedReplyContent = reply.getContent();
                 } else {
@@ -101,6 +107,7 @@ public class CommentService {
                         reply.getCommentId(),
                         modifiedReplyContent,
                         reply.getCreatedAt(),
+                        reply.getCommentType(),
                         MemberMapper.toMemberSummaryResponse(reply.getMember())
                 );
                 result.add(replyResponse);

@@ -37,6 +37,9 @@ public class Comment extends Auditable {
     @JsonIgnore
     private List<Comment> reply = new ArrayList<>();
 
+    @Column(length = 7)
+    private String commentType;
+
     @Column(length = 1, columnDefinition = "CHAR DEFAULT 'N'")
     private String deleteYn;
 
