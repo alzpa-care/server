@@ -79,7 +79,22 @@ public class ProductController {
             @RequestParam(defaultValue = "newest") String order,
             @RequestParam(defaultValue = "0") int completed
     ) {
-        List<Product> products = productService.getProducts(category, order, completed);
+        List<Product> products = productService.findProducts(category, order, completed);
+
+        List<ProductResponse> productResponses = products.stream()
+                .map(ProductResponse::toProductResponse)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(productResponses);
+
+    }
+
+    @GetMapping("/trade")
+    public ResponseEntity getProductsByMember(Authentication authentication) {
+
+        String username = authentication.getName();
+
+        List<Product> products = productService.findProductsByMember(username);
 
         List<ProductResponse> productResponses = products.stream()
                 .map(ProductResponse::toProductResponse)
