@@ -14,18 +14,11 @@ public enum ExceptionCode {
     PRODUCT_NOT_FOUND(404, "productId를 확인해 주세요. 중고거래글을 찾을 수 없습니다."),
     PRODUCT_NOT_DELETE_SOLD_OUT(404,"거래가 완료된 이후에는 글 삭제가 불가능합니다."),
     PRODUCT_NOT_DELETE_MEMBER(404,"작성자 외에는 글을 삭제할 수 없습니다."),
+    COMMENT_NOT_FOUND(404, "댓글을 찾을 수 없습니다."),
+    SELLER_MEMBER_NOT_MATCH(404, "판매자만 구매자를 결정할 수 있습니다."),
+    UNAUTHORIZED_ACCESS(404, "댓글 작성자만 댓글을 삭제할 수 있습니다.");
 
 
-    //이위에는 사용중인 코드
-    MEMBER_EXISTS(409, "Member exists"),
-    WISHLIST_NOT_FOUND(404, "Wishlist not found"),
-    TRADE_NOT_FOUND(404, "Trade not found"),
-    FIXED_NOT_FOUND(404, "fixed not found"),
-    TOTAL_NOT_FOUND(404, "Total not found"),
-    TRADE_MEMBER_NOT_MATCH(404,"Trade memberId not match"),
-    FIXED_MEMBER_NOT_MATCH(404,"Fixed memberId not match"),
-    WISHLIST_MEMBER_NOT_MATCH(404, "Wishlist memberId not match"),
-    TOTAL_MEMBER_NOT_MATCH(404, "Total memberId not match");
 
     @Getter
     private int status;

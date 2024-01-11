@@ -1,9 +1,14 @@
-package alzpaCare.server.product;
+package alzpaCare.server.product.service;
 
 import alzpaCare.server.advice.BusinessLogicException;
 import alzpaCare.server.advice.ExceptionCode;
 import alzpaCare.server.member.entity.Member;
 import alzpaCare.server.member.repository.MemberRepository;
+import alzpaCare.server.product.entity.Category;
+import alzpaCare.server.product.entity.Product;
+import alzpaCare.server.product.repository.ProductRepository;
+import alzpaCare.server.product.request.BuyerRequest;
+import alzpaCare.server.product.request.ProductRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,16 +27,14 @@ public class ProductService {
 
 
     public Product createProduct(Product product, String email) {
-        Member sellerMember = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Member sellerMember = getMemberByEmail(email);
 
         product.setSellerMember(sellerMember);
         return productRepository.save(product);
     }
 
     public Product updateProduct(Integer productId, ProductRequest productRequest, String email) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
+        Product product = getProductById(productId);
 
         Optional.ofNullable(productRequest.category())
                 .ifPresent(product::setCategory);
@@ -52,18 +54,19 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public Product findProductById(Integer productId) {
-
-        return productRepository.findById(productId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
+        return getProductById(productId);
     }
 
     public Product updateBuyer(Integer productId, BuyerRequest buyerRequest, String email) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
+        Product product = getProductById(productId);
+        Member member = getMemberByEmail(email);
+
+        if(!product.getSellerMember().getEmail().equals(email)) {
+            new BusinessLogicException(ExceptionCode.SELLER_MEMBER_NOT_MATCH);
+        }
 
         product.setSoldOutYn("Y");
-        Member buyerMember = memberRepository.findById(buyerRequest.memberId())
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Member buyerMember = getMemberById(buyerRequest.memberId());
 
         product.setBuyerMember(buyerMember);
         return productRepository.save(product);
@@ -94,6 +97,21 @@ public class ProductService {
         );
 
         return products;
+    }
+
+    private Member getMemberByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
+
+    private Member getMemberById(Integer memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
+
+    private Product getProductById(Integer productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
     }
 
 

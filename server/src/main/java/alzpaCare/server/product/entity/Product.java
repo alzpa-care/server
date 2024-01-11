@@ -1,10 +1,14 @@
-package alzpaCare.server.product;
+package alzpaCare.server.product.entity;
 
 import alzpaCare.server.audit.Auditable;
+import alzpaCare.server.comment.entity.Comment;
 import alzpaCare.server.member.entity.Member;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -23,7 +27,7 @@ public class Product extends Auditable {
     private Category category;
 
     @Column(nullable = false)
-    private int price;
+    private Integer price;
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -49,6 +53,13 @@ public class Product extends Auditable {
     @JoinColumn(name = "buyer_member_id")
     @JsonIgnoreProperties("buyerMember")
     private Member buyerMember;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("product")
+    private List<Comment> comments = new ArrayList<>();
+
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private Integer commentCount;
 
 
 }

@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07e2661e-0966-420f-a600-30abef03a5b6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/patient/Patient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/patient/PatientRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/patient/PatientRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/member/entity/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/member/entity/Member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/advice/ExceptionCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/advice/ExceptionCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/productComment/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/comment/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/productComment/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/comment/CommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/productComment/CommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/comment/CommentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/productComment/CommentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/comment/CommentRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/productComment/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/alzpaCare/server/comment/CommentService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,21 +58,6 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
-  <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="server" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="server" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

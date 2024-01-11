@@ -4,6 +4,7 @@ package alzpaCare.server.member.entity;
 import alzpaCare.server.audit.Auditable;
 import alzpaCare.server.patient.entity.Patient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 

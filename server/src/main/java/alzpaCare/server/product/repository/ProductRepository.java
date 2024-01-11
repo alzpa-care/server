@@ -1,6 +1,8 @@
-package alzpaCare.server.product;
+package alzpaCare.server.product.repository;
 
 
+import alzpaCare.server.product.entity.Category;
+import alzpaCare.server.product.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
