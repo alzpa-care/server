@@ -51,7 +51,7 @@ public class CommentController {
             @PathVariable("productId") Integer productId, Authentication authentication) {
 
         String username = authentication.getName();
-        List<CommentResponse> commentResponses = commentService.getCommentResponsesByProduct(productId, username);
+        List<CommentResponse> commentResponses = commentService.findCommentById(productId, username);
 
         return ResponseEntity.ok(commentResponses);
     }
