@@ -26,9 +26,4 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     );
 
 
-    @Query("SELECT DISTINCT p FROM Product p " +
-            "LEFT JOIN FETCH p.sellerMember sm " +
-            "LEFT JOIN FETCH p.buyerMember bm " +
-            "WHERE sm.email = :email OR bm.email = :email")
-    List<Product> findProductsByMember(@Param("email") String email);
 }
