@@ -72,23 +72,6 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    @Transactional(readOnly = true)
-    public List<Product> findProducts(Integer category, String order, int completed) {
-
-        List<Product> products = productRepository.findProductsByFilters(
-                (category != null) ? Category.values()[category - 1] : null,
-                order,
-                completed
-        );
-
-        return products;
-    }
-
-    @Transactional(readOnly = true)
-    public List<Product> findProductsByMember(String email) {
-        return productRepository.findProductsByMember(email);
-    }
-
     public void productDelete(Integer productId, String email) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
@@ -103,6 +86,17 @@ public class ProductService {
         } else {
             productRepository.delete(product);
         }
+    }
+
+    public List<Product> getProducts(Integer category, String order, int completed) {
+
+        List<Product> products = productRepository.findProductsByFilters(
+                (category != null) ? Category.values()[category - 1] : null,
+                order,
+                completed
+        );
+
+        return products;
     }
 
     private Member getMemberByEmail(String email) {

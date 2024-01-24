@@ -10,7 +10,6 @@ public record CommentResponse(
         Integer commentId,
         String content,
         LocalDate createdAt,
-        String commentType,
         MemberSummaryResponse member
 
 ) {
@@ -20,7 +19,6 @@ public record CommentResponse(
                 comment.getCommentId(),
                 comment.getContent(),
                 comment.getCreatedAt(),
-                comment.getCommentType(),
                 MemberMapper.toMemberSummaryResponse(comment.getMember())
         );
     }
