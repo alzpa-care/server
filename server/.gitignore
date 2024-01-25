@@ -39,3 +39,5 @@ out/
 ### 리소스 디렉토리 내의 YAML 파일 무시 ###
 /src/main/resources/**/*.yaml
 /src/test/resources/**/*.yaml
+
+**/build/
