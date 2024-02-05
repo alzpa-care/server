@@ -1,10 +1,10 @@
-package alzpaCare.server.comment.service;
+package alzpaCare.server.productComment.service;
 
 import alzpaCare.server.advice.BusinessLogicException;
 import alzpaCare.server.advice.ExceptionCode;
-import alzpaCare.server.comment.entity.Comment;
-import alzpaCare.server.comment.repository.CommentRepository;
-import alzpaCare.server.comment.response.CommentResponse;
+import alzpaCare.server.productComment.entity.Comment;
+import alzpaCare.server.productComment.repository.CommentRepository;
+import alzpaCare.server.productComment.response.CommentResponse;
 import alzpaCare.server.member.entity.Member;
 import alzpaCare.server.member.mapper.MemberMapper;
 import alzpaCare.server.member.repository.MemberRepository;

@@ -1,9 +1,9 @@
-package alzpaCare.server.comment.controller;
+package alzpaCare.server.productComment.controller;
 
-import alzpaCare.server.comment.request.CommentRequest;
-import alzpaCare.server.comment.response.CommentResponse;
-import alzpaCare.server.comment.service.CommentService;
-import alzpaCare.server.comment.entity.Comment;
+import alzpaCare.server.productComment.request.CommentRequest;
+import alzpaCare.server.productComment.response.CommentResponse;
+import alzpaCare.server.productComment.service.CommentService;
+import alzpaCare.server.productComment.entity.Comment;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static alzpaCare.server.comment.response.CommentResponse.toCommentResponse;
+import static alzpaCare.server.productComment.response.CommentResponse.toCommentResponse;
 
 @RestController
 @RequiredArgsConstructor

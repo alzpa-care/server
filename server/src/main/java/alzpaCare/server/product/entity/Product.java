@@ -1,7 +1,7 @@
 package alzpaCare.server.product.entity;
 
 import alzpaCare.server.audit.Auditable;
-import alzpaCare.server.comment.entity.Comment;
+import alzpaCare.server.productComment.entity.Comment;
 import alzpaCare.server.member.entity.Member;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -24,6 +24,7 @@ public class Product extends Auditable {
     private Integer productId;
 
     @Column(length = 10, nullable = false)
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     @Column(nullable = false)

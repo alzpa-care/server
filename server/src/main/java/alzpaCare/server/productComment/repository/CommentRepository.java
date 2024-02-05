@@ -1,6 +1,6 @@
-package alzpaCare.server.comment.repository;
+package alzpaCare.server.productComment.repository;
 
-import alzpaCare.server.comment.entity.Comment;
+import alzpaCare.server.productComment.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,3 +18,5 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
 
 }
+
+

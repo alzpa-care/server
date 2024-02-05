@@ -16,7 +16,9 @@ public enum ExceptionCode {
     PRODUCT_NOT_DELETE_MEMBER(404,"작성자 외에는 글을 삭제할 수 없습니다."),
     COMMENT_NOT_FOUND(404, "댓글을 찾을 수 없습니다."),
     SELLER_MEMBER_NOT_MATCH(404, "판매자만 구매자를 결정할 수 있습니다."),
-    UNAUTHORIZED_ACCESS(404, "댓글 작성자만 댓글을 삭제할 수 있습니다.");
+    UNAUTHORIZED_ACCESS(404, "댓글 작성자만 댓글을 삭제할 수 있습니다."),
+    POST_MEMBER_NOT_MATCH(404, "게시글 작성자만 글을 수정할 수 있습니다."),
+    POST_NOT_FOUND(404,"게시글을 찾을 수 없습니다.");
 
 
 

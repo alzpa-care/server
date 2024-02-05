@@ -1,6 +1,6 @@
-package alzpaCare.server.comment.response;
+package alzpaCare.server.productComment.response;
 
-import alzpaCare.server.comment.entity.Comment;
+import alzpaCare.server.productComment.entity.Comment;
 import alzpaCare.server.member.mapper.MemberMapper;
 import alzpaCare.server.member.response.MemberSummaryResponse;
 
