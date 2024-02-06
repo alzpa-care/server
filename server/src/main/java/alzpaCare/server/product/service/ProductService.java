@@ -36,6 +36,10 @@ public class ProductService {
     public Product updateProduct(Integer productId, ProductRequest productRequest, String email) {
         Product product = getProductById(productId);
 
+        if(!product.getSellerMember().getEmail().equals(email)) {
+            new BusinessLogicException(ExceptionCode.SELLER_MEMBER_NOT_MATCH);
+        }
+
         Optional.ofNullable(productRequest.category())
                 .ifPresent(product::setCategory);
         Optional.ofNullable(productRequest.price())
@@ -50,11 +54,6 @@ public class ProductService {
                 .ifPresent(product::setImgUrl);
 
         return productRepository.save(product);
-    }
-
-    @Transactional(readOnly = true)
-    public Product findProductById(Integer productId) {
-        return getProductById(productId);
     }
 
     public Product updateBuyer(Integer productId, BuyerRequest buyerRequest, String email) {
@@ -72,22 +71,12 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public void productDelete(Integer productId, String email) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
-
-        Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-
-        if ("Y".equals(product.getSoldOutYn())) {
-            throw new BusinessLogicException(ExceptionCode.PRODUCT_NOT_DELETE_SOLD_OUT);
-        } else if (!Objects.equals(product.getSellerMember(), member)) {
-            throw new BusinessLogicException(ExceptionCode.PRODUCT_NOT_DELETE_MEMBER);
-        } else {
-            productRepository.delete(product);
-        }
+    @Transactional(readOnly = true)
+    public Product findProductById(Integer productId) {
+        return getProductById(productId);
     }
 
+    @Transactional(readOnly = true)
     public List<Product> getProducts(Integer category, String order, int completed) {
 
         List<Product> products = productRepository.findProductsByFilters(
@@ -97,6 +86,20 @@ public class ProductService {
         );
 
         return products;
+    }
+
+    public void productDelete(Integer productId, String email) {
+        Product product = getProductById(productId);
+
+        Member member = getMemberByEmail(email);
+
+        if ("Y".equals(product.getSoldOutYn())) {
+            throw new BusinessLogicException(ExceptionCode.PRODUCT_NOT_DELETE_SOLD_OUT);
+        } else if (!Objects.equals(product.getSellerMember(), member)) {
+            throw new BusinessLogicException(ExceptionCode.PRODUCT_NOT_DELETE_MEMBER);
+        } else {
+            productRepository.delete(product);
+        }
     }
 
     private Member getMemberByEmail(String email) {

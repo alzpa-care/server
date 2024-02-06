@@ -1,8 +1,8 @@
-package alzpaCare.server.comment.entity;
+package alzpaCare.server.postComment.entity;
 
 import alzpaCare.server.audit.Auditable;
 import alzpaCare.server.member.entity.Member;
-import alzpaCare.server.product.entity.Product;
+import alzpaCare.server.post.entity.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "product_comments")
+@Table(name = "post_comments")
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comment extends Auditable {
+public class PostComment extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,12 +30,12 @@ public class Comment extends Auditable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     @JsonIgnoreProperties("parent")
-    private Comment parent;
+    private PostComment parent;
 
     @OrderBy("createdAt ASC")
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Comment> reply = new ArrayList<>();
+    private List<PostComment> reply = new ArrayList<>();
 
     @Column(length = 1, columnDefinition = "CHAR DEFAULT 'N'")
     private String deleteYn;
@@ -46,9 +46,9 @@ public class Comment extends Auditable {
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "post_id", nullable = false)
     @JsonIgnoreProperties("comments")
-    private Product product;
+    private Post post;
 
 
 }

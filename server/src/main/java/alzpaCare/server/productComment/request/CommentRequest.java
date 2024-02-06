@@ -1,6 +1,6 @@
-package alzpaCare.server.comment.request;
+package alzpaCare.server.productComment.request;
 
-import alzpaCare.server.comment.entity.Comment;
+import alzpaCare.server.productComment.entity.Comment;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
