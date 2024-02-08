@@ -9,6 +9,9 @@ import alzpaCare.server.post.entity.PostType;
 import alzpaCare.server.post.repository.PostRepository;
 import alzpaCare.server.post.request.PostRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,16 +56,17 @@ public class PostService {
     public Post findPostById(Integer postId) { return getPostById(postId); }
 
     @Transactional(readOnly = true)
-    public List<Post> getPosts(Integer postType, String order) {
+    public Page<Post> getPosts(int page, int size, Integer postType, String order) {
         PostType type = PostType.values()[postType - 1];
+        Pageable pageable = PageRequest.of(page, size);
 
         switch (order) {
             case "like":
-                return postRepository.findByPostTypeOrderByLikeCountDesc(type);
+                return postRepository.findByPostTypeOrderByLikeCntDesc(type, pageable);
             case "view":
-                return postRepository.findByPostTypeOrderByViewCountDesc(type);
+                return postRepository.findByPostTypeOrderByViewCntDesc(type, pageable);
             default:
-                return postRepository.findByPostTypeOrderByCreatedAtDesc(type);
+                return postRepository.findByPostTypeOrderByCreatedAtDesc(type, pageable);
         }
     }
 

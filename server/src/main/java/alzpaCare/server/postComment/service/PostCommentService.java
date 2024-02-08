@@ -133,14 +133,14 @@ public class PostCommentService {
     }
 
     private void commentCountAdd(Post post) {
-        post.setCommentCount(post.getCommentCount() + 1);
+        post.setCommentCnt(post.getCommentCnt() + 1);
         postRepository.save(post);
     }
 
     private void commentCountSubtract(Post post) {
-        int currentCount = post.getCommentCount();
+        int currentCount = post.getCommentCnt();
         if (currentCount > 0) {
-            post.setCommentCount(currentCount - 1);
+            post.setCommentCnt(currentCount - 1);
             postRepository.save(post);
         }
     }
