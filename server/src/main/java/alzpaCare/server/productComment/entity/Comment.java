@@ -50,5 +50,8 @@ public class Comment extends Auditable {
     @JsonIgnoreProperties("comments")
     private Product product;
 
+    @Column(length = 3)
+    private String commentType;
+
 
 }
