@@ -40,5 +40,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             Pageable pageable
     );
 
+    @Query("SELECT p FROM Product p WHERE p.productId IN :productIds")
+    Page<Product> findByIdIn(@Param("productIds") List<Integer> productIds,
+                             Pageable pageable);
+
 
 }
