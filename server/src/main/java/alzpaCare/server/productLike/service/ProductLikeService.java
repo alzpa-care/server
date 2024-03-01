@@ -1,4 +1,4 @@
-package alzpaCare.server.productLike;
+package alzpaCare.server.productLike.service;
 
 import alzpaCare.server.advice.BusinessLogicException;
 import alzpaCare.server.advice.ExceptionCode;
@@ -6,6 +6,8 @@ import alzpaCare.server.member.entity.Member;
 import alzpaCare.server.member.repository.MemberRepository;
 import alzpaCare.server.product.entity.Product;
 import alzpaCare.server.product.repository.ProductRepository;
+import alzpaCare.server.productLike.entity.ProductLike;
+import alzpaCare.server.productLike.repository.ProductLikeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +27,7 @@ public class ProductLikeService {
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
 
-    public void likeProduct(String email, Integer productId) {
+    public void addLikeProduct(String email, Integer productId) {
         Member member = getMemberByEmail(email);
         Product product = getProductById(productId);
 

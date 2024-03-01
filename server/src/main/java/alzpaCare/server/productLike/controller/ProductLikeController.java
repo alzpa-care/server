@@ -1,7 +1,8 @@
-package alzpaCare.server.productLike;
+package alzpaCare.server.productLike.controller;
 
 import alzpaCare.server.product.entity.Product;
 import alzpaCare.server.product.response.ProductResponse;
+import alzpaCare.server.productLike.service.ProductLikeService;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,7 @@ public class ProductLikeController {
             @PathVariable("productId") Integer productId, Authentication authentication) {
 
         String username = authentication.getName();
-        productLikeService.likeProduct(username, productId);
+        productLikeService.addLikeProduct(username, productId);
 
         return ResponseEntity.ok("찜이 등록되었습니다.");
     }

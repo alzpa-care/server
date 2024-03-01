@@ -80,12 +80,12 @@ public class PostService {
         postRepository.delete(post);
     }
 
-    private Member getMemberByEmail(String email) {
+    public Member getMemberByEmail(String email) {
         return memberRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 
-    private Post getPostById(Integer postId) {
+    public Post getPostById(Integer postId) {
         return postRepository.findById(postId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
     }

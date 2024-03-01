@@ -18,7 +18,9 @@ public enum ExceptionCode {
     SELLER_MEMBER_NOT_MATCH(404, "판매자만 구매자를 결정할 수 있습니다."),
     UNAUTHORIZED_ACCESS(404, "댓글 작성자만 댓글을 수정/삭제할 수 있습니다."),
     POST_MEMBER_NOT_MATCH(404, "게시글 작성자만 글을 수정할 수 있습니다."),
-    POST_NOT_FOUND(404,"게시글을 찾을 수 없습니다.");
+    POST_NOT_FOUND(404,"게시글을 찾을 수 없습니다."),
+    ALREADY_EXIST_VOTE(409, "이미 좋아요를 누르셨습니다."),
+    POST_LIKE_NOT_FOUNT(409, "좋아요를 누르지 않은 글에 좋아요를 취소할 수 없습니다.");
 
 
 

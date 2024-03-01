@@ -1,4 +1,4 @@
-package alzpaCare.server.productLike;
+package alzpaCare.server.productLike.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,11 +11,11 @@ public class ProductLike {
 
     @Id
     @Column(name = "member_id")
-    private int memberId;
+    private Integer memberId;
 
     @Id
     @Column(name = "product_id")
-    private int productId;
+    private Integer productId;
 
 
 }
