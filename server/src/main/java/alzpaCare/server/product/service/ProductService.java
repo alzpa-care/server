@@ -10,6 +10,7 @@ import alzpaCare.server.product.repository.ProductRepository;
 import alzpaCare.server.product.request.BuyerRequest;
 import alzpaCare.server.product.request.ProductRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,16 +77,30 @@ public class ProductService {
         return getProductById(productId);
     }
 
-    @Transactional(readOnly = true)
-    public List<Product> getProducts(Integer category, String order, int completed) {
+//    @Transactional(readOnly = true)
+//    public List<Product> getProducts(Integer category, String order, int completed) {
+//
+//        List<Product> products = productRepository.findProductsByFilters(
+//                (category != null) ? Category.values()[category - 1] : null,
+//                order,
+//                completed
+//        );
+//
+//        return products;
+//    }
 
-        List<Product> products = productRepository.findProductsByFilters(
+    @Transactional(readOnly = true)
+    public Page<Product> getProducts(int page, int size, Integer category, String order, int completed) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+
+        Page<Product> productsPage = productRepository.findProductsByFilters(
                 (category != null) ? Category.values()[category - 1] : null,
                 order,
-                completed
+                completed,
+                pageable
         );
 
-        return products;
+        return productsPage;
     }
 
     public void productDelete(Integer productId, String email) {

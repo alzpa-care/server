@@ -5,8 +5,12 @@ import alzpaCare.server.product.service.ProductService;
 import alzpaCare.server.product.entity.Product;
 import alzpaCare.server.product.request.BuyerRequest;
 import alzpaCare.server.product.request.ProductRequest;
+import alzpaCare.server.response.MultiResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -73,20 +77,38 @@ public class ProductController {
         return ResponseEntity.ok(productResponse);
     }
 
-    @GetMapping
-    public ResponseEntity getProducts(
-            @RequestParam int category,
-            @RequestParam(defaultValue = "newest") String order,
-            @RequestParam(defaultValue = "0") int completed
-    ) {
-        List<Product> products = productService.getProducts(category, order, completed);
+//    @GetMapping
+//    public ResponseEntity getProducts(
+//            @RequestParam int category,
+//            @RequestParam(defaultValue = "newest") String order,
+//            @RequestParam(defaultValue = "0") int completed
+//    ) {
+//        List<Product> products = productService.getProducts(category, order, completed);
+//
+//        List<ProductResponse> productResponses = products.stream()
+//                .map(ProductResponse::toProductResponse)
+//                .collect(Collectors.toList());
+//
+//        return ResponseEntity.ok(productResponses);
+//
+//    }
 
-        List<ProductResponse> productResponses = products.stream()
+    @GetMapping
+    public ResponseEntity getProducts(@Positive @RequestParam int page,
+                                      @Positive @RequestParam(defaultValue = "12") int size,
+                                      @RequestParam int category,
+                                      @RequestParam(defaultValue = "newest") String order,
+                                      @RequestParam(defaultValue = "0") int completed) {
+
+        Page<Product> products = productService.getProducts(page - 1, size, category, order, completed);
+
+        List<ProductResponse> productResponses = products.getContent().stream()
                 .map(ProductResponse::toProductResponse)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(productResponses);
+        MultiResponse<ProductResponse> multiResponse = new MultiResponse<>(productResponses, products);
 
+        return new ResponseEntity<>(multiResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/{productId}")

@@ -32,6 +32,7 @@ public class CommentService {
 
         comment.setMember(member);
         comment.setProduct(product);
+        comment.setCommentType("댓글");
 
         Comment savedComment = commentRepository.save(comment);
         // 댓글이 성공적으로 저장되면 댓글 카운트를 증가시킨다
@@ -47,6 +48,7 @@ public class CommentService {
         reply.setParent(parentComment);
         reply.setProduct(parentComment.getProduct());
         reply.setMember(member);
+        reply.setCommentType("대댓글");
 
         Comment savedReply = commentRepository.save(reply);
 
@@ -81,6 +83,7 @@ public class CommentService {
                     parentComment.getCommentId(),
                     modifiedContent,
                     parentComment.getCreatedAt(),
+                    parentComment.getCommentType(),
                     MemberMapper.toMemberSummaryResponse(parentComment.getMember())
             );
             result.add(parentResponse);
@@ -101,6 +104,7 @@ public class CommentService {
                         reply.getCommentId(),
                         modifiedReplyContent,
                         reply.getCreatedAt(),
+                        reply.getCommentType(),
                         MemberMapper.toMemberSummaryResponse(reply.getMember())
                 );
                 result.add(replyResponse);
@@ -112,6 +116,10 @@ public class CommentService {
 
     public Comment updateComment(Integer commentId, Comment updatedComment, String email) {
         Comment comment = getCommentById(commentId);
+
+        if (!comment.getMember().getEmail().equals(email)) {
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_ACCESS);
+        }
 
         comment.setContent(updatedComment.getContent());
 

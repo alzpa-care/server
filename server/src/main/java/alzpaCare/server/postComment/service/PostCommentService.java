@@ -32,6 +32,7 @@ public class PostCommentService {
 
         postComment.setMember(member);
         postComment.setPost(post);
+        postComment.setCommentType("댓글");
 
         PostComment savedPostComment = postCommentRepository.save(postComment);
         // 댓글이 성공적으로 저장되면 댓글 카운트를 증가시킨다
@@ -47,6 +48,7 @@ public class PostCommentService {
         reply.setParent(parentPostComment);
         reply.setPost(parentPostComment.getPost());
         reply.setMember(member);
+        reply.setCommentType("대댓글");
 
         PostComment savedReply = postCommentRepository.save(reply);
 
@@ -69,6 +71,7 @@ public class PostCommentService {
                     parentPostComment.getCommentId(),
                     modifiedContent,
                     parentPostComment.getCreatedAt(),
+                    parentPostComment.getCommentType(),
                     MemberMapper.toMemberSummaryResponse(parentPostComment.getMember())
             );
             result.add(parentResponse);
@@ -82,6 +85,7 @@ public class PostCommentService {
                         reply.getCommentId(),
                         modifiedReplyContent,
                         reply.getCreatedAt(),
+                        reply.getCommentType(),
                         MemberMapper.toMemberSummaryResponse(reply.getMember())
                 );
                 result.add(replyResponse);
@@ -93,6 +97,10 @@ public class PostCommentService {
 
     public PostComment updateComment(Integer commentId, PostComment updatedPostComment, String email) {
         PostComment postComment = getCommentById(commentId);
+
+        if (!postComment.getMember().getEmail().equals(email)) {
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_ACCESS);
+        }
 
         postComment.setContent(updatedPostComment.getContent());
 
@@ -133,14 +141,14 @@ public class PostCommentService {
     }
 
     private void commentCountAdd(Post post) {
-        post.setCommentCount(post.getCommentCount() + 1);
+        post.setCommentCnt(post.getCommentCnt() + 1);
         postRepository.save(post);
     }
 
     private void commentCountSubtract(Post post) {
-        int currentCount = post.getCommentCount();
+        int currentCount = post.getCommentCnt();
         if (currentCount > 0) {
-            post.setCommentCount(currentCount - 1);
+            post.setCommentCnt(currentCount - 1);
             postRepository.save(post);
         }
     }
