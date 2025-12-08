@@ -5,6 +5,8 @@ import alzpaCare.server.member.response.MemberSummaryResponse;
 import alzpaCare.server.post.entity.Post;
 import alzpaCare.server.post.entity.PostType;
 
+import java.time.LocalDate;
+
 public record PostResponse(
 
         Integer postId,
@@ -15,6 +17,8 @@ public record PostResponse(
         Integer viewCnt,
         Integer likeCnt,
         String deleteYn,
+        Integer commentCnt,
+        LocalDate createdAt,
         MemberSummaryResponse member
 ) {
 
@@ -25,9 +29,11 @@ public record PostResponse(
                     post.getTitle(),
                     post.getContent(),
                     post.getImgUrl(),
-                    post.getViewCount(),
-                    post.getLikeCount(),
+                    post.getViewCnt(),
+                    post.getLikeCnt(),
                     post.getDeleteYn(),
+                    post.getCommentCnt(),
+                    post.getCreatedAt(),
                     MemberMapper.toMemberSummaryResponse(post.getMember())
             );
         }

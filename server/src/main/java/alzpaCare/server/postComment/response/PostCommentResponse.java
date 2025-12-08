@@ -10,15 +10,18 @@ public record PostCommentResponse(
         Integer commentId,
         String content,
         LocalDate createdAt,
+        String commentType,
         MemberSummaryResponse member
 
 ) {
 
     public static PostCommentResponse toCommentResponse(PostComment postComment) {
+        String type = postComment.getParent() == null ? "댓글" : "대댓글";
         return new PostCommentResponse(
                 postComment.getCommentId(),
                 postComment.getContent(),
                 postComment.getCreatedAt(),
+                type,
                 MemberMapper.toMemberSummaryResponse(postComment.getMember())
         );
     }

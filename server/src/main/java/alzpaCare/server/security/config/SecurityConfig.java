@@ -7,6 +7,7 @@ import alzpaCare.server.security.oauth2.CustomOauth2UserService;
 import alzpaCare.server.security.oauth2.OAuth2AuthenticationFailureHandler;
 import alzpaCare.server.security.oauth2.OAuth2AuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
@@ -22,6 +23,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
+@ComponentScan
 public class SecurityConfig {
 
     private final TokenProvider tokenProvider;

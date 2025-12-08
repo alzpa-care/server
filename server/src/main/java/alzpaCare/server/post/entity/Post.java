@@ -37,10 +37,10 @@ public class Post extends Auditable {
     private String[] imgUrl;
 
     @Column(columnDefinition = "INT DEFAULT 0")
-    private Integer viewCount;
+    private Integer viewCnt;
 
     @Column(columnDefinition = "INT DEFAULT 0")
-    private Integer likeCount;
+    private Integer likeCnt;
 
     @Column(length = 1, columnDefinition = "CHAR DEFAULT 'N'")
     private String deleteYn;
@@ -55,7 +55,7 @@ public class Post extends Auditable {
     private List<PostComment> postComments = new ArrayList<>();
 
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private Integer commentCount;
+    private Integer commentCnt;
 
 
 }

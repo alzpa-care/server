@@ -4,8 +4,12 @@ import alzpaCare.server.post.entity.Post;
 import alzpaCare.server.post.request.PostRequest;
 import alzpaCare.server.post.response.PostResponse;
 import alzpaCare.server.post.service.PostService;
+import alzpaCare.server.response.MultiResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -57,18 +61,36 @@ public class PostController {
         return ResponseEntity.ok(postResponse);
     }
 
+//    @GetMapping
+//    public ResponseEntity getPost(
+//            @RequestParam int postType,
+//            @RequestParam(defaultValue = "newest") String order) {
+//
+//        List<Post> posts = postService.getPosts(postType, order);
+//
+//        List<PostResponse> postResponses = posts.stream()
+//                .map(PostResponse::toPostResponse)
+//                .collect(Collectors.toList());
+//
+//        return ResponseEntity.ok(postResponses);
+//    }
+
     @GetMapping
     public ResponseEntity getPost(
+            @Positive @RequestParam int page,
+            @Positive @RequestParam(defaultValue = "12") int size,
             @RequestParam int postType,
             @RequestParam(defaultValue = "newest") String order) {
 
-        List<Post> posts = postService.getPosts(postType, order);
+        Page<Post> posts = postService.getPosts(page-1, size, postType, order);
 
         List<PostResponse> postResponses = posts.stream()
                 .map(PostResponse::toPostResponse)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(postResponses);
+        MultiResponse<PostResponse> multiResponse = new MultiResponse<>(postResponses, posts);
+
+        return new ResponseEntity<>(multiResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/{postId}")

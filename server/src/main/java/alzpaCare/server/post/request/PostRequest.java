@@ -30,9 +30,10 @@ public record PostRequest(
                     .title(title())
                     .content(content())
                     .imgUrl(imgUrl())
-                    .viewCount(0)
-                    .likeCount(0)
+                    .viewCnt(0)
+                    .likeCnt(0)
                     .deleteYn("N")
+                    .commentCnt(0)
                     .build();
         }
 
